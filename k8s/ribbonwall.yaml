@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-k8s
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: test1.ribbonwall.ca, test3.ribbonwall.ca
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: hello-k8s
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-k8s
+  template:
+    metadata:
+      labels:
+        app: hello-k8s
+    spec:
+      containers:
+        - name: hello-k8s
+          image: DOCKER_IMAGE_NAME
+          securityContext:
+            privileged: false
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+          env:
+            - name: VERSION_INFO
+              value: "VERSION_INFO_VALUE"
+            - name: BUILD_DATE
+              value: "BUILD_DATE_VALUE"
+          ports:
+            - containerPort: 8080
+

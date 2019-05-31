@@ -1,46 +1,72 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2.1
+
+orbs:
+  aws-eks: circleci/aws-eks@0.1.0
+  kubernetes: circleci/kubernetes@0.3.0
+  aws-ecr: circleci/aws-ecr@3.1.0
+
 jobs:
-  create-deployment:
+  deploy-application:
     executor: aws-eks/python3
     parameters:
       cluster-name:
         description: |
           Name of the EKS cluster
         type: string
+      docker-image-name:
+        description: |
+          Name of the docker image to be deployed
+        type: string
+      version-info:
+        description: |
+          App version information
+        type: string
+      aws-region:
+        description: |
+          AWS region
+        type: string
+        default: ""
     steps:
       - checkout
+      - run:
+          name: Create deployment manifest
+          command: |
+            # Replace the placeholders in the manifest with the intended values.
+            # This is to avoid hardcoding the image name in the manifest, to make this
+            # project more portable.
+            BUILD_DATE=$(date '+%Y%m%d%H%M%S')
+            cat k8s/ribbonwall.yaml.template |\
+               sed "s|DOCKER_IMAGE_NAME|<< parameters.docker-image-name >>|\
+                g;s|BUILD_DATE_VALUE|$BUILD_DATE|g;s|VERSION_INFO_VALUE|\
+                << parameters.version-info >>|g" > k8s/ribbonwall-deployment.yaml
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: << parameters.cluster-name >>
           install-kubectl: true
+          aws-region: << parameters.aws-region >>
       - kubernetes/create-or-update-resource:
+          resource-file-path: "k8s/ribbonwall-deployment.yaml"
           get-rollout-status: true
-          resource-file-path: tests/nginx-deployment/deployment.yaml
-          resource-name: deployment/nginx-deployment
-orbs:
-  aws-eks: circleci/aws-eks@0.1.0
-  kubernetes: circleci/kubernetes@0.3.0
-version: 2.1
+          resource-name: deployment/ribbonwall
+          show-kubectl-command: true
 workflows:
   deployment:
     jobs:
-      - aws-eks/create-cluster:
-          cluster-name: eks-demo-deployment
-      - create-deployment:
-          cluster-name: eks-demo-deployment
+      - aws-ecr/build_and_push_image:
+          account-url: AWS_ECR_URL
+          region: AWS_DEFAULT_REGION
+          repo: be_ribbonwall
+          dockerfile: ~/project/be_ribbonwall/Dockerfile
+          path: ~/project/be_ribbonwall
+          tag: ${CIRCLE_SHA1}
+          # Uncomment if the repository does not yet exist
+          # create-repo: true
+      - deploy-application:
+          cluster-name: ribbonwall
+          aws-region: $AWS_DEFAULT_REGION
+          docker-image-name: "${AWS_ECR_URL}/be_ribbonwall:${CIRCLE_SHA1}"
+          version-info: "${CIRCLE_SHA1}"
           requires:
-            - aws-eks/create-cluster
-      - aws-eks/update-container-image:
-          cluster-name: eks-demo-deployment
-          container-image-updates: 'nginx=nginx:1.9.1'
-          post-steps:
-            - kubernetes/delete-resource:
-                resource-names: nginx-deployment
-                resource-types: deployment
-                wait: true
-          record: true
-          requires:
-            - create-deployment
-          resource-name: deployment/nginx-deployment
-      - aws-eks/delete-cluster:
-          cluster-name: eks-demo-deployment
-          requires:
-            - aws-eks/update-container-image
+            - aws-ecr/build_and_push_image
