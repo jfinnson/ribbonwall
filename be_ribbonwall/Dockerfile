@@ -4,7 +4,7 @@ RUN apk add git
 ADD src /src
 
 # Download dependencies
-RUN go get -d -github.com/go-sql-driver/mysql
+RUN go get -d github.com/go-sql-driver/mysql
 RUN go get -d github.com/aws/aws-sdk-go-v2/...
 
 RUN cd /src && go build -o be_ribbonwall main.go
