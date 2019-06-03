@@ -1,11 +1,12 @@
 # build stage
 FROM golang:alpine AS build-env
 ADD src /src
+RUN cd /src
 
 # Download dependencies
 RUN go get -d -v ./...
 
-RUN cd /src && go build -o be_ribbonwall main.go
+RUN go build -o be_ribbonwall main.go
 
 # final stage
 FROM alpine
