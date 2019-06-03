@@ -1,5 +1,6 @@
 # build stage
 FROM golang:alpine AS build-env
+RUN apk add git
 ADD src /src
 
 # Download dependencies
