@@ -1,12 +1,12 @@
 # build stage
 FROM golang:alpine AS build-env
 ADD src /src
-RUN cd /src
 
 # Download dependencies
-RUN go get -d -v ./...
+RUN go get -d -v github.com/go-sql-driver/mysql
+RUN go get -d -v github.com/aws/aws-sdk-go-v2
 
-RUN go build -o be_ribbonwall main.go
+RUN cd /src && go build -o be_ribbonwall main.go
 
 # final stage
 FROM alpine
