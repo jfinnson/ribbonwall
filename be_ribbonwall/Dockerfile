@@ -1,15 +1,15 @@
 # build stage
 FROM golang:alpine AS build-env
-RUN apk add git
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+RUN apk add git
 ADD src /src
 
 # Download dependencies
 RUN go get github.com/go-sql-driver/mysql
-RUN go get github.com/aws/aws-sdk-go/aws
-RUN go get github.com/aws/aws-sdk-go/aws/credentials/stscreds
-RUN go get github.com/aws/aws-sdk-go/aws/session
-RUN go get github.com/aws/aws-sdk-go/service/rds/rdsutils
+#RUN go get github.com/aws/aws-sdk-go/aws
+#RUN go get github.com/aws/aws-sdk-go/aws/credentials/stscreds
+#RUN go get github.com/aws/aws-sdk-go/aws/session
+#RUN go get github.com/aws/aws-sdk-go/service/rds/rdsutils
 
 # Build go package
 RUN cd /src && go build -o be_ribbonwall main.go

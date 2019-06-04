@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/rds/rdsutils"
+	//"github.com/aws/aws-sdk-go/aws"
+	//"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
+	//"github.com/aws/aws-sdk-go/aws/session"
+	//"github.com/aws/aws-sdk-go/service/rds/rdsutils"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -22,19 +22,19 @@ func mainHandler() http.HandlerFunc {
 func dbTest() http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		dbUser := os.Getenv("db_user")
-		//dbPassword := os.Getenv("db_password")
+		dbPassword := os.Getenv("db_password")
 		dbName := os.Getenv("db_name")
 		dbEndpoint := os.Getenv("db_endpoint")
-		awsRegion := os.Getenv("aws_region")
-		awsArn := os.Getenv("aws_arn")
+		//awsRegion := os.Getenv("aws_region")
+		//awsArn := os.Getenv("aws_arn")
 
-		awsCreds := stscreds.NewCredentials(session.New(&aws.Config{Region: &awsRegion}), awsArn)
-		authToken, err := rdsutils.BuildAuthToken(dbEndpoint, awsRegion, dbUser, awsCreds)
+		//awsCreds := stscreds.NewCredentials(session.New(&aws.Config{Region: &awsRegion}), awsArn)
+		//authToken, err := rdsutils.BuildAuthToken(dbEndpoint, awsRegion, dbUser, awsCreds)
 
 		// Create the MySQL DNS string for the DB connection
 		// user:password@protocol(endpoint)/dbname?<params>
 		dnsStr := fmt.Sprintf("%s:%s@tcp(%s)/%s?tls=true",
-			dbUser, authToken, dbEndpoint, dbName,
+			dbUser, dbPassword, dbEndpoint, dbName,
 		)
 
 		// Use db to perform SQL operations on database
@@ -47,7 +47,7 @@ func dbTest() http.HandlerFunc {
 
 		err = db.Ping()
 		if err != nil {
-			_, _ = fmt.Fprintf(w, "Error ping %s. authToken %s . dbEndpoint %s, awsRegion %s, dbUser %s, awsArn %s", err.Error(), authToken, dbEndpoint, awsRegion, dbUser, awsArn)
+			_, _ = fmt.Fprintf(w, "Error ping %s. ", err.Error()) // authToken %s . dbEndpoint %s, awsRegion %s, dbUser %s, awsArn %s", err.Error(), authToken, dbEndpoint, awsRegion, dbUser, awsArn)
 			return
 		}
 
