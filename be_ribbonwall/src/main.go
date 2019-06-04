@@ -40,7 +40,7 @@ func dbTest() http.HandlerFunc {
 
 		err = db.Ping()
 		if err != nil {
-			_, _ = fmt.Fprintf(w, "Error ping %s", err.Error())
+			_, _ = fmt.Fprintf(w, "Error ping %s. dnsStr %s", err.Error(), dnsStr)
 			return
 		}
 
