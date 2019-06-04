@@ -17,7 +17,7 @@ COPY --from=build-env /src/be_ribbonwall /app/
 EXPOSE 8080
 
 # DB credentials from ENV
-ENV db_name $db_user
+ENV db_user $db_user
 ENV db_password $db_password
 ENV db_name $db_name
 ENV db_endpoint $db_endpoint
