@@ -1,8 +1,7 @@
 # build stage
 FROM golang:alpine AS build-env
 RUN apk add git
-RUN apk add ca-certificates
-#RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 ADD src /src
 
 # Download dependencies
