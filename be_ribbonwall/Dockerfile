@@ -1,12 +1,3 @@
-#ENV variables
-ARG db_user
-ARG db_password
-ARG db_name
-ARG db_endpoint
-
-RUN echo "Oh dang look at that $db_user"
-
-
 # build stage
 FROM golang:alpine AS build-env
 RUN apk add git
@@ -24,6 +15,15 @@ WORKDIR /app
 COPY --from=build-env /src/be_ribbonwall /app/
 
 EXPOSE 8080
+
+#ENV variables
+ARG db_user
+ARG db_password
+ARG db_name
+ARG db_endpoint
+
+RUN echo "Oh dang look at that $db_user"
+
 
 # DB credentials from ENV
 ENV db_user jfinnson
