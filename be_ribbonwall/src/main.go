@@ -1,8 +1,13 @@
 package main
 
 import (
+	"crypto/tls"
+	"crypto/x509"
 	"database/sql"
 	"fmt"
+	"github.com/go-sql-driver/mysql"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 
@@ -33,30 +38,28 @@ func dbTest() http.HandlerFunc {
 			dbUser, dbPassword, dbEndpoint, dbName,
 		)
 
-		//
-		//
-		//rootCertPool := x509.NewCertPool() //NewCertPool returns a new, empty CertPool.
-		//
-		//pem, err := ioutil.ReadFile("rds-ca-bundle.pem") //reading the provided pem
-		//if err != nil {
-		//	_, _ = fmt.Fprintf(w, "Could not read certificates")
-		//	log.Fatal("! Could not read certificates")
-		//}
-		//fmt.Println("Loading certificate seems to work")
-		////AppendCertsFromPEM attempts to parse a series of PEM encoded certificates.
-		////pushing in the pem
-		//if ok := rootCertPool.AppendCertsFromPEM(pem); !ok {
-		//	_, _ = fmt.Fprintf(w, "Failed to append PEM")
-		//	log.Fatal("Failed to append PEM.")
-		//}
-		//fmt.Println("Appending certificate seems to work too")
-		//
-		////setting up TLS
-		////we dont need a client ca?
-		//_ = mysql.RegisterTLSConfig("custom", &tls.Config{
-		//	RootCAs:            rootCertPool,
-		//	InsecureSkipVerify: true,
-		//})
+		rootCertPool := x509.NewCertPool() //NewCertPool returns a new, empty CertPool.
+
+		pem, err := ioutil.ReadFile("rds-ca-2015-root.pem") //reading the provided pem
+		if err != nil {
+			_, _ = fmt.Fprintf(w, "Could not read certificates")
+			log.Fatal("! Could not read certificates")
+		}
+		fmt.Println("Loading certificate seems to work")
+		//AppendCertsFromPEM attempts to parse a series of PEM encoded certificates.
+		//pushing in the pem
+		if ok := rootCertPool.AppendCertsFromPEM(pem); !ok {
+			_, _ = fmt.Fprintf(w, "Failed to append PEM")
+			log.Fatal("Failed to append PEM.")
+		}
+		fmt.Println("Appending certificate seems to work too")
+
+		//setting up TLS
+		//we dont need a client ca?
+		_ = mysql.RegisterTLSConfig("custom", &tls.Config{
+			RootCAs:            rootCertPool,
+			InsecureSkipVerify: true,
+		})
 
 		// Use db to perform SQL operations on database
 		db, err := sql.Open("mysql", dnsStr)
