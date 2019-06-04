@@ -48,11 +48,17 @@ func dbTest() http.HandlerFunc {
 		driver := mysql.MySQLDriver{}
 		_ = driver
 		// Use db to perform SQL operations on database
-		if _, err = sql.Open("mysql", dnsStr); err != nil {
-			panic(err)
+		db, err := sql.Open("mysql", dnsStr)
+		if err != nil {
+			panic(err.Error())
 		}
 
-		_, _ = fmt.Fprintf(w, "Successfully opened connection to database!")
+		results, err := db.Query("SELECT * FROM ribbonwall_db.test_table")
+		if err != nil {
+			panic(err.Error())
+		}
+
+		_, _ = fmt.Fprintf(w, "Successfully opened connection to database! %s", results)
 	})
 }
 
