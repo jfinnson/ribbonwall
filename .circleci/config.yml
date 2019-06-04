@@ -30,10 +30,10 @@ jobs:
         type: string
         default: ""
     environment:
-      db_user: $db_user
-      db_password: $db_password
-      db_name: $db_name
-      db_endpoint: $db_endpoint
+      db_user: db_user
+      db_password: db_password
+      db_name: db_name
+      db_endpoint: db_endpoint
     steps:
       - checkout
       - run:
