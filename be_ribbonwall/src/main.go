@@ -47,7 +47,7 @@ func dbTest() http.HandlerFunc {
 
 		err = db.Ping()
 		if err != nil {
-			_, _ = fmt.Fprintf(w, "Error ping %s. authToken %s ", err.Error(), authToken)
+			_, _ = fmt.Fprintf(w, "Error ping %s. authToken %s . dbEndpoint %s, awsRegion %s, dbUser %s, awsCreds %s", err.Error(), authToken, dbEndpoint, awsRegion, dbUser, awsCreds)
 			return
 		}
 
