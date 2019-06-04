@@ -50,15 +50,17 @@ func dbTest() http.HandlerFunc {
 		// Use db to perform SQL operations on database
 		db, err := sql.Open("mysql", dnsStr)
 		if err != nil {
+			_, _ = fmt.Fprintf(w, "Error %s", err.Error())
 			panic(err.Error())
 		}
 
 		results, err := db.Query("SELECT * FROM ribbonwall_db.test_table")
 		if err != nil {
+			_, _ = fmt.Fprintf(w, "Error %s", err.Error())
 			panic(err.Error())
 		}
 
-		_, _ = fmt.Fprintf(w, "Successfully opened connection to database! %s", results)
+		_, _ = fmt.Fprintf(w, "Successfully opened connection to database! Test results: %s", results)
 	})
 }
 
