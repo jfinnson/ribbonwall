@@ -40,7 +40,7 @@ func dbTest() http.HandlerFunc {
 
 		rootCertPool := x509.NewCertPool() //NewCertPool returns a new, empty CertPool.
 
-		pem, err := ioutil.ReadFile("rds-ca-2015-root.pem") //reading the provided pem
+		pem, err := ioutil.ReadFile("./rds-ca-2015-root.pem") //reading the provided pem
 		if err != nil {
 			_, _ = fmt.Fprintf(w, "Could not read certificates")
 			log.Fatal("! Could not read certificates")
