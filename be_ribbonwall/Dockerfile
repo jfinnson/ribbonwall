@@ -1,8 +1,9 @@
 # build stage
 FROM golang:alpine AS build-env
-#RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
-RUN apt ca-certificates && rm -rf /var/cache/apk/*
+RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 RUN apk add git
+# For debugging with netstat
+RUN apk add busybox-extras
 ADD src /src
 
 # Download dependencies
