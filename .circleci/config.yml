@@ -61,7 +61,7 @@ workflows:
           dockerfile: ~/project/be_ribbonwall/Dockerfile
           path: ~/project/be_ribbonwall
           tag: ${CIRCLE_SHA1}
-          extra-build-args: "--build-arg db_user=${db_user} --build-arg db_password=${db_password} --build-arg db_name=${db_name} --build-arg db_endpoint=${db_endpoint}"
+          extra-build-args: "--build-arg db_user=test --build-arg db_password=${db_password} --build-arg db_name=${db_name} --build-arg db_endpoint=${db_endpoint}"
           # Uncomment if the repository does not yet exist
           # create-repo: true
       - deploy-application:
