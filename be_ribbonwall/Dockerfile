@@ -22,13 +22,14 @@ ARG db_user
 ARG db_password
 ARG db_name
 ARG db_endpoint
+ARG aws_region
 
 # DB credentials from ENV
 ENV db_user $db_user
 ENV db_password $db_password
 ENV db_name $db_name
 ENV db_endpoint $db_endpoint
-#ENV aws_region $aws_region
+ENV aws_region $aws_region
 #ENV aws_arn $aws_arn
 
 RUN ["chmod", "+x", "./be_ribbonwall"]
