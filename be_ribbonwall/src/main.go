@@ -26,8 +26,9 @@ func dbTest() http.HandlerFunc {
 		dbName := os.Getenv("db_name")
 		dbEndpoint := os.Getenv("db_endpoint")
 		awsRegion := os.Getenv("aws_region")
+		awsArn := os.Getenv("aws_arn")
 
-		awsCreds := stscreds.NewCredentials(session.New(&aws.Config{Region: &awsRegion}), os.Args[5])
+		awsCreds := stscreds.NewCredentials(session.New(&aws.Config{Region: &awsRegion}), awsArn)
 		authToken, err := rdsutils.BuildAuthToken(dbEndpoint, awsRegion, dbUser, awsCreds)
 
 		// Create the MySQL DNS string for the DB connection
