@@ -1,6 +1,8 @@
 # build stage
 FROM golang:alpine AS build-env
 RUN apk add git
+RUN apk add ca-certificates
+#RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 ADD src /src
 
 # Download dependencies
@@ -16,17 +18,14 @@ COPY --from=build-env /src/be_ribbonwall /app/
 
 EXPOSE 8080
 
-#ENV variables
+#ENV variables to load from --build-arg
 ARG db_user
 ARG db_password
 ARG db_name
 ARG db_endpoint
 
-RUN echo "Oh dang look at that $db_user"
-
-
 # DB credentials from ENV
-ENV db_user jfinnson
+ENV db_user $db_user
 ENV db_password $db_password
 ENV db_name $db_name
 ENV db_endpoint $db_endpoint
