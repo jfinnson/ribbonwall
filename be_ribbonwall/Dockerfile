@@ -5,9 +5,8 @@ ADD src /src
 
 # Download dependencies
 RUN go get github.com/go-sql-driver/mysql
-RUN go get github.com/aws/aws-sdk-go-v2
-RUN go get github.com/aws/aws-sdk-go-v2/...
 
+# Build go package
 RUN cd /src && go build -o be_ribbonwall main.go
 
 # final stage
@@ -19,6 +18,7 @@ EXPOSE 8080
 
 # DB credentials from ENV
 ENV db_name $db_user
+ENV db_password $db_password
 ENV db_name $db_name
 ENV db_endpoint $db_endpoint
 ENV aws_region $aws_region

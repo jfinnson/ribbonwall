@@ -6,12 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/go-sql-driver/mysql"
-
-	"github.com/aws/aws-sdk-go-v2/aws/external"
-	"github.com/aws/aws-sdk-go-v2/aws/stscreds"
-	"github.com/aws/aws-sdk-go-v2/service/rds/rdsutils"
-	"github.com/aws/aws-sdk-go-v2/service/sts"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func mainHandler() http.HandlerFunc {
@@ -23,44 +18,72 @@ func mainHandler() http.HandlerFunc {
 func dbTest() http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		dbUser := os.Getenv("db_user")
+		dbPassword := os.Getenv("db_password")
 		dbName := os.Getenv("db_name")
 		dbEndpoint := os.Getenv("db_endpoint")
-		awsRegion := os.Getenv("aws_region")
-		awsArn := os.Getenv("aws_arn")
-
-		cfg, err := external.LoadDefaultAWSConfig()
-		if err != nil {
-			_, _ = fmt.Fprintf(os.Stderr, "failed to load configuration, %v", err)
-			os.Exit(1)
-		}
-		cfg.Region = awsRegion
-
-		credProvider := stscreds.NewAssumeRoleProvider(sts.New(cfg), awsArn)
-
-		authToken, err := rdsutils.BuildAuthToken(dbEndpoint, awsRegion, dbUser, credProvider)
+		//awsRegion := os.Getenv("aws_region")
 
 		// Create the MySQL DNS string for the DB connection
 		// user:password@protocol(endpoint)/dbname?<params>
+		//sql.Open("mysql", "id:password@tcp(your-amazonaws-uri.com:3306)/dbname")
 		dnsStr := fmt.Sprintf("%s:%s@tcp(%s)/%s?tls=true",
-			dbUser, authToken, dbEndpoint, dbName,
+			dbUser, dbPassword, dbEndpoint, dbName,
 		)
 
-		driver := mysql.MySQLDriver{}
-		_ = driver
 		// Use db to perform SQL operations on database
 		db, err := sql.Open("mysql", dnsStr)
+		defer db.Close()
 		if err != nil {
-			_, _ = fmt.Fprintf(w, "Error %s", err.Error())
-			panic(err.Error())
+			_, _ = fmt.Fprintf(w, "Error sql.Open %s", err.Error())
+			return
 		}
 
-		results, err := db.Query("SELECT * FROM ribbonwall_db.test_table")
+		err = db.Ping()
 		if err != nil {
-			_, _ = fmt.Fprintf(w, "Error %s", err.Error())
-			panic(err.Error())
+			_, _ = fmt.Fprintf(w, "Error ping %s", err.Error())
+			return
 		}
 
-		_, _ = fmt.Fprintf(w, "Successfully opened connection to database! Test results: %s", results)
+		rows, err := db.Query("SELECT * FROM ribbonwall_db.test_table")
+		if err != nil {
+			_, _ = fmt.Fprintf(w, "Error query %s", err.Error())
+			return
+		}
+
+		cols, err := rows.Columns()
+		if err != nil {
+			fmt.Println("Failed to get columns", err)
+			return
+		}
+
+		// Result is your slice string.
+		rawResult := make([][]byte, len(cols))
+		result := make([]string, len(cols))
+
+		dest := make([]interface{}, len(cols)) // A temporary interface{} slice
+		for i, _ := range rawResult {
+			dest[i] = &rawResult[i] // Put pointers to each string in the interface slice
+		}
+
+		for rows.Next() {
+			err = rows.Scan(dest...)
+			if err != nil {
+				fmt.Println("Failed to scan row", err)
+				return
+			}
+
+			for i, raw := range rawResult {
+				if raw == nil {
+					result[i] = "\\N"
+				} else {
+					result[i] = string(raw)
+				}
+			}
+
+			fmt.Printf("%#v\n", result)
+		}
+
+		_, _ = fmt.Fprintf(w, "Successfully opened connection to database! Test results: %s", result)
 	})
 }
 
