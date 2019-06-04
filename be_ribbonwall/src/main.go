@@ -5,12 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-
-	//"github.com/aws/aws-sdk-go/aws"
-	//"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
-	//"github.com/aws/aws-sdk-go/aws/session"
-	//"github.com/aws/aws-sdk-go/service/rds/rdsutils"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 func mainHandler() http.HandlerFunc {
@@ -36,6 +30,31 @@ func dbTest() http.HandlerFunc {
 		dnsStr := fmt.Sprintf("%s:%s@tcp(%s)/%s?tls=true",
 			dbUser, dbPassword, dbEndpoint, dbName,
 		)
+
+		//
+		//
+		//rootCertPool := x509.NewCertPool() //NewCertPool returns a new, empty CertPool.
+		//
+		//pem, err := ioutil.ReadFile("rds-ca-bundle.pem") //reading the provided pem
+		//if err != nil {
+		//	_, _ = fmt.Fprintf(w, "Could not read certificates")
+		//	log.Fatal("! Could not read certificates")
+		//}
+		//fmt.Println("Loading certificate seems to work")
+		////AppendCertsFromPEM attempts to parse a series of PEM encoded certificates.
+		////pushing in the pem
+		//if ok := rootCertPool.AppendCertsFromPEM(pem); !ok {
+		//	_, _ = fmt.Fprintf(w, "Failed to append PEM")
+		//	log.Fatal("Failed to append PEM.")
+		//}
+		//fmt.Println("Appending certificate seems to work too")
+		//
+		////setting up TLS
+		////we dont need a client ca?
+		//_ = mysql.RegisterTLSConfig("custom", &tls.Config{
+		//	RootCAs:            rootCertPool,
+		//	InsecureSkipVerify: true,
+		//})
 
 		// Use db to perform SQL operations on database
 		db, err := sql.Open("mysql", dnsStr)
