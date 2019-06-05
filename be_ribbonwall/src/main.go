@@ -21,11 +21,6 @@ func dbTest() http.HandlerFunc {
 		dbPassword := os.Getenv("db_password")
 		dbName := os.Getenv("db_name")
 		dbEndpoint := os.Getenv("db_endpoint")
-		//awsRegion := os.Getenv("aws_region")
-		//awsArn := os.Getenv("aws_arn")
-
-		//awsCreds := stscreds.NewCredentials(session.New(&aws.Config{Region: &awsRegion}), awsArn)
-		//authToken, err := rdsutils.BuildAuthToken(dbEndpoint, awsRegion, dbUser, awsCreds)
 
 		// Create the MySQL DNS string for the DB connection
 		// user:password@protocol(endpoint)/dbname?<params>
@@ -43,7 +38,7 @@ func dbTest() http.HandlerFunc {
 
 		err = db.Ping()
 		if err != nil {
-			_, _ = fmt.Fprintf(w, "Error ping %s. ", err.Error()) // authToken %s . dbEndpoint %s, awsRegion %s, dbUser %s, awsArn %s", err.Error(), authToken, dbEndpoint, awsRegion, dbUser, awsArn)
+			_, _ = fmt.Fprintf(w, "Error ping %s. ", err.Error())
 			return
 		}
 
