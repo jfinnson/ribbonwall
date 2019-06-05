@@ -29,7 +29,7 @@ func dbTest() http.HandlerFunc {
 
 		// Create the MySQL DNS string for the DB connection
 		// user:password@protocol(endpoint)/dbname?<params>
-		dnsStr := fmt.Sprintf("%s:%s@tcp(%s)/%s?tls=true",
+		dnsStr := fmt.Sprintf("%s:%s@tcp(%s)/%s",
 			dbUser, dbPassword, dbEndpoint, dbName,
 		)
 
