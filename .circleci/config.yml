@@ -8,6 +8,11 @@ orbs:
   kubernetes: circleci/kubernetes@0.3.0
   aws-ecr: circleci/aws-ecr@3.1.0
 
+general:
+  branches:
+    only:
+      - master
+
 jobs:
   deploy-application:
     executor: aws-eks/python3
