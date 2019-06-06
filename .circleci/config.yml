@@ -9,10 +9,6 @@ orbs:
   aws-ecr: circleci/aws-ecr@3.1.0
 
 jobs:
-  build:
-    branches:
-      only:
-        - master
   deploy-application:
     executor: aws-eks/python3
     parameters:
@@ -58,8 +54,11 @@ jobs:
 workflows:
   deployment:
     jobs:
-      - build:
       - aws-ecr/build_and_push_image:
+          filters:
+            branches:
+              only:
+                - master
           account-url: AWS_ECR_URL
           region: AWS_DEFAULT_REGION
           repo: be_ribbonwall
@@ -70,6 +69,10 @@ workflows:
           # Uncomment if the repository does not yet exist
           # create-repo: true
       - deploy-application:
+          filters:
+            branches:
+              only:
+                - master
           cluster-name: ribbonwall
           aws-region: $AWS_DEFAULT_REGION
           docker-image-name: "${AWS_ECR_URL}/be_ribbonwall:${CIRCLE_SHA1}"
