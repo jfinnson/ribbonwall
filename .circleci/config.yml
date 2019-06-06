@@ -58,10 +58,10 @@ workflows:
           account-url: AWS_ECR_URL
           region: AWS_DEFAULT_REGION
           repo: be_ribbonwall
-          dockerfile: ~/project/be_ribbonwall/Dockerfile
+          dockerfile: ~/project/Dockerfile
           path: ~/project/be_ribbonwall
           tag: ${CIRCLE_SHA1}
-          extra-build-args: "--build-arg db_user=${db_user} --build-arg db_password=${db_password} --build-arg db_name=${db_name} --build-arg db_endpoint=${db_endpoint} --build-arg aws_region=${aws_region} --build-arg aws_arn=${aws_arn}"
+          extra-build-args: "--build-arg db_user=${DB_USER} --build-arg db_password=${DB_PASSWORD} --build-arg db_name=${DB_NAME} --build-arg db_host=${DB_HOST} --build-arg db_host=${DB_PORT} --build-arg aws_region=${aws_region} --build-arg aws_arn=${aws_arn}"
           # Uncomment if the repository does not yet exist
           # create-repo: true
       - deploy-application:

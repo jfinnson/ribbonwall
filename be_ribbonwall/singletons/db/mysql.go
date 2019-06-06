@@ -14,7 +14,7 @@ var client *gorm.DB
 // Get returns a singleton instance of the MySQL DB client
 func Get() (*gorm.DB, error) {
 
-	// Make sure initialization is threadsafe
+	// Make sure initialization is thread safe
 	var err error
 	once.Do(func() {
 
