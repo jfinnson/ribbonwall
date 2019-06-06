@@ -1,0 +1,9 @@
+env: local
+
+db:
+  host: localhost
+  name: ribbonwall
+  port: 3306
+  sslmode: disable
+  connectionName: localhost
+  debugLog: false
