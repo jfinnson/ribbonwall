@@ -2,7 +2,7 @@ env: local
 
 db:
   host: localhost
-  name: ribbonwall
+  name: ribbonwall_db
   port: 3306
   sslmode: disable
   connectionName: localhost

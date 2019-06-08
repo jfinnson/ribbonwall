@@ -8,6 +8,7 @@ ADD common /common
 
 # Download dependencies
 RUN go get github.com/go-sql-driver/mysql
+# TODO add libs
 
 # Build go package
 RUN cd /be_ribbonwall && go build -o be_ribbonwall main.go

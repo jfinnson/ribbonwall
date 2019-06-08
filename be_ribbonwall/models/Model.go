@@ -9,8 +9,8 @@ import (
 // Model defines the interface for entity models
 type Model struct {
 	UUID      uuid.UUID  `json:"uuid" gorm:"column:uuid;primary_key;"`
-	CreatedAt time.Time  `json:"createdAt" gorm:"column:created_at;not null"`
-	UpdatedAt time.Time  `json:"updatedAt" gorm:"column:updated_at;not null"`
+	CreatedAt time.Time  `json:"createdAt" gorm:"column:created_at;not null;default:CURRENT_TIMESTAMP"`
+	UpdatedAt time.Time  `json:"updatedAt" gorm:"column:updated_at;not null;default:CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"`
 	DeletedAt *time.Time `json:"deletedAt,omitempty" gorm:"column:deleted_at"`
 }
 
