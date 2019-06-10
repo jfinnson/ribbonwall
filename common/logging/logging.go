@@ -30,10 +30,17 @@ func GetLogger() *log.Logger {
 }
 
 // NewLogger create new logger.
-func NewLogger() *log.Logger {
+func NewLogger(env string) *log.Logger {
 
 	once.Do(func() {
 		logger = log.New()
+
+		if env == "production" {
+			log.SetFormatter(&log.JSONFormatter{})
+		} else {
+			// The TextFormatter is default, you don't actually have to do this.
+			log.SetFormatter(&log.TextFormatter{})
+		}
 	})
 
 	return logger
@@ -133,11 +140,13 @@ func Panic(args ...interface{}) {
 }
 
 // Fatal logs a message at level Fatal on the logrus logger.
+// WARNING logger.Fatal will cause a server crash
 func Fatal(args ...interface{}) {
 	// Attach trace stack to the message
 	args = append(args, fmt.Sprintf(" \n%s", string(debug.Stack())))
 
-	logger.Fatal(args...)
+	//logger.Fatal(args...)
+	logger.Panic(args...)
 }
 
 // Debugf logs a message at level Debug on the logrus logger.
@@ -184,12 +193,14 @@ func Panicf(format string, args ...interface{}) {
 }
 
 // Fatalf logs a message at level Fatal on the logrus logger.
+// WARNING logger.Fatalf will cause a server crash
 func Fatalf(format string, args ...interface{}) {
 
 	// Attach trace stack to the message
 	args = append(args, fmt.Sprintf(" \n%s", string(debug.Stack())))
 
-	logger.Fatalf(format, args...)
+	//logger.Fatalf(format, args...)
+	logger.Panicf(format, args...)
 }
 
 // Debugln logs a message at level Debug on the logrus logger.
@@ -236,12 +247,14 @@ func Panicln(args ...interface{}) {
 }
 
 // Fatalln logs a message at level Fatal on the logrus logger.
+// WARNING logger.Fatalln will cause a server crash
 func Fatalln(args ...interface{}) {
 
 	// Attach trace stack to the message
 	args = append(args, fmt.Sprintf(" \n%s", string(debug.Stack())))
 
-	logger.Fatalln(args...)
+	//logger.Fatalln(args...)
+	logger.Panicln(args...)
 }
 
 // Disable all logs
