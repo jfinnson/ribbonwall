@@ -8,7 +8,7 @@ import (
 
 // Initialize --
 func Initialize(config Config) (*gorm.DB, error) {
-	dbStr := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
+	dbStr := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
 		config.User,
 		config.Password,
 		config.Host,
