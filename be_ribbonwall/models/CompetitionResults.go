@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	uuid "github.com/satori/go.uuid"
+	"time"
+)
 
 // Competition Results struct that represents the table competition_results in the database
 type CompetitionResults struct {
@@ -8,12 +11,12 @@ type CompetitionResults struct {
 	OrganizationName string `json:"organization" gorm:"column:organization_name;not null"`
 
 	Competitor           Competitor `gorm:"foreignkey:CompetitorUUID"`
-	CompetitorUUID       string     `json:"competitorUUID" gorm:"column:competitor_uuid;not null;"`
+	CompetitorUUID       uuid.UUID  `json:"competitorUUID" gorm:"column:competitor_uuid;not null;"`
 	CompetitorExternalId string     `json:"competitorExternalId" gorm:"column:competitor_external_id;not null"`
 	HorseName            string     `json:"competitorHorseName" gorm:"column:competitor_horse_name"`
 
 	CompetitionName string    `json:"competitionName" gorm:"column:competition_name;not null"`
-	CompetitionDate time.Time `json:"competitionDate" gorm:"column:competition_date;not null"`
+	CompetitionDate time.Time `json:"competitionDate" gorm:"column:competition_date;not null;default:CURRENT_TIMESTAMP"`
 	DivisionName    string    `json:"divisionName" gorm:"column:division_name"`
 	ClassName       string    `json:"className" gorm:"column:class_name"`
 
