@@ -22,7 +22,7 @@ ADD common /common
 
 # Build go package
 #RUN cd /be_ribbonwall && go build
-RUN go build ./...
+RUN cd /be_ribbonwall && go build ./...
 
 # final stage
 FROM alpine
