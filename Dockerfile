@@ -22,7 +22,7 @@ RUN go get gopkg.in/square/go-jose.v2
 # TODO add libs
 
 # Build go package
-RUN cd /be_ribbonwall && go build -o be_ribbonwall main.go
+RUN cd /be_ribbonwall && go build
 
 # final stage
 FROM alpine
