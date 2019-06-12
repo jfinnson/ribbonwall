@@ -7,7 +7,6 @@ ADD common /common
 
 
 # Download dependencies
-RUN cd /be_ribbonwall
 RUN go get github.com/go-sql-driver/mysql
 RUN go get github.com/gin-contrib/cors
 RUN go get github.com/gin-contrib/sessions
