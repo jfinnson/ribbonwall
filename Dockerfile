@@ -7,22 +7,22 @@ ADD common /common
 
 
 # Download dependencies
-#RUN go get github.com/go-sql-driver/mysql
-#RUN go get github.com/gin-contrib/cors
-#RUN go get github.com/gin-contrib/sessions
-#RUN go get github.com/gin-contrib/sessions/cookie
-#RUN go get github.com/gin-gonic/gin
-#RUN go get github.com/jinzhu/gorm
-#RUN go get github.com/jinzhu/gorm
-#RUN go get github.com/jinzhu/configor
-#RUN go get github.com/satori/go.uuid
-#RUN go get github.com/sirupsen/logrus
-#RUN go get github.com/auth0-community/go-auth0
-#RUN go get gopkg.in/square/go-jose.v2
+RUN go get github.com/go-sql-driver/mysql
+RUN go get github.com/gin-contrib/cors
+RUN go get github.com/gin-contrib/sessions
+RUN go get github.com/gin-contrib/sessions/cookie
+RUN go get github.com/gin-gonic/gin
+RUN go get github.com/jinzhu/gorm
+RUN go get github.com/jinzhu/gorm
+RUN go get github.com/jinzhu/configor
+RUN go get github.com/satori/go.uuid
+RUN go get github.com/sirupsen/logrus
+RUN go get github.com/auth0-community/go-auth0
+RUN go get gopkg.in/square/go-jose.v2
 
 # Build go package
 #RUN cd /be_ribbonwall && go build
-RUN go mod init github.com/ribbonwall
+#RUN go mod init github.com/ribbonwall
 RUN cd /be_ribbonwall && go build ./...
 
 # final stage
