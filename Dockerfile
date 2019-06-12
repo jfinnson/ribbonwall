@@ -22,6 +22,7 @@ ADD common /common
 
 # Build go package
 #RUN cd /be_ribbonwall && go build
+RUN go mod init github.com/ribbonwall
 RUN cd /be_ribbonwall && go build ./...
 
 # final stage
