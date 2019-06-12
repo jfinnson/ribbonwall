@@ -21,8 +21,8 @@ RUN go get github.com/auth0-community/go-auth0
 RUN go get gopkg.in/square/go-jose.v2
 
 # Build go package
-#RUN cd /be_ribbonwall && go build
-RUN go build ./be_ribbonwall/...
+RUN cd /be_ribbonwall && go build ./...
+#RUN go build ./be_ribbonwall/...
 
 # final stage
 FROM alpine
