@@ -7,6 +7,8 @@ ADD common /common
 
 
 # Download dependencies
+RUN cd /be_ribbonwall
+RUN go mod init
 RUN go get github.com/go-sql-driver/mysql
 RUN go get github.com/gin-contrib/cors
 RUN go get github.com/gin-contrib/sessions
@@ -22,8 +24,8 @@ RUN go get gopkg.in/square/go-jose.v2
 
 # Build go package
 #RUN cd /be_ribbonwall && go build
-#RUN go mod init github.com/ribbonwall
-RUN cd /be_ribbonwall && go build ./...
+RUN go get -d -v
+RUN go build ./...
 
 # final stage
 FROM alpine
