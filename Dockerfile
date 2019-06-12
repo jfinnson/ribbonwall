@@ -1,33 +1,35 @@
 # build stage
-FROM golang:alpine AS build-env
+FROM golang:alpine
 RUN apk --no-cache upgrade && apk --no-cache add ca-certificates
 RUN apk add git
-ADD be_ribbonwall /be_ribbonwall
-ADD common /common
 
+WORKDIR $GOPATH/src/github.com/ribbonwall
+COPY . .
+RUN go get -d -v ./...
+RUN go install -v ./...
 
 # Download dependencies
-RUN go get github.com/go-sql-driver/mysql
-RUN go get github.com/gin-contrib/cors
-RUN go get github.com/gin-contrib/sessions
-RUN go get github.com/gin-contrib/sessions/cookie
-RUN go get github.com/gin-gonic/gin
-RUN go get github.com/jinzhu/gorm
-RUN go get github.com/jinzhu/gorm
-RUN go get github.com/jinzhu/configor
-RUN go get github.com/satori/go.uuid
-RUN go get github.com/sirupsen/logrus
-RUN go get github.com/auth0-community/go-auth0
-RUN go get gopkg.in/square/go-jose.v2
-
-# Build go package
-RUN cd /be_ribbonwall && go build -o be_ribbonwall .
-#RUN go build ./be_ribbonwall/...
-
-# final stage
-FROM alpine
-WORKDIR /app
-COPY --from=build-env /be_ribbonwall /app/
+#RUN go get github.com/go-sql-driver/mysql
+#RUN go get github.com/gin-contrib/cors
+#RUN go get github.com/gin-contrib/sessions
+#RUN go get github.com/gin-contrib/sessions/cookie
+#RUN go get github.com/gin-gonic/gin
+#RUN go get github.com/jinzhu/gorm
+#RUN go get github.com/jinzhu/gorm
+#RUN go get github.com/jinzhu/configor
+#RUN go get github.com/satori/go.uuid
+#RUN go get github.com/sirupsen/logrus
+#RUN go get github.com/auth0-community/go-auth0
+#RUN go get gopkg.in/square/go-jose.v2
+#
+## Build go package
+#RUN cd /be_ribbonwall && go build ./... -o ./be_ribbonwall
+##RUN go build ./be_ribbonwall/...
+#
+## final stage
+#FROM alpine
+#WORKDIR /app
+#COPY --from=build-env /be_ribbonwall /app/
 
 EXPOSE 8080
 
