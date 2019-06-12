@@ -63,7 +63,7 @@ workflows:
           region: AWS_DEFAULT_REGION
           repo: be_ribbonwall
           dockerfile: ~/project/Dockerfile
-          path: ~/project/be_ribbonwall
+          path: ~/project
           tag: ${CIRCLE_SHA1}
           extra-build-args: "--build-arg db_user=${DB_USER} --build-arg db_password=${DB_PASSWORD}
           --build-arg db_name=${DB_NAME} --build-arg db_host=${DB_HOST} --build-arg db_host=${DB_PORT}
