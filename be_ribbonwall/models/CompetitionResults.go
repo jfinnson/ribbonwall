@@ -10,7 +10,7 @@ type CompetitionResults struct {
 	Model                   // UUID, createdAt, updatedAt, deletedAt
 	OrganizationName string `json:"organization" gorm:"column:organization_name;not null"`
 
-	Competitor           Competitor `gorm:"foreignkey:CompetitorUUID"`
+	Competitor           Competitor `json:"competitor" gorm:"foreignkey:CompetitorUUID"`
 	CompetitorUUID       uuid.UUID  `json:"competitorUUID" gorm:"column:competitor_uuid;not null;"`
 	CompetitorExternalId string     `json:"competitorExternalId" gorm:"column:competitor_external_id;not null"`
 	HorseName            string     `json:"competitorHorseName" gorm:"column:competitor_horse_name"`

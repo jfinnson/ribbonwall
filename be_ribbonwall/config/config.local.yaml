@@ -7,3 +7,12 @@ db:
   sslmode: disable
   connectionName: localhost
   debugLog: false
+
+auth:
+  audience: admin.ribbonwall.ca
+  issuer: https://ribbonwall.auth0.com/
+  domain: ribbonwall.auth0.com
+  clientID: BpEKugicW7UkdXmWatcHLbw5iNf4wp5l
+  redirectURL: http://localhost:8080/callback
+  loginURL: http://localhost:8080/login
+  homeURL: http://localhost:8080/
