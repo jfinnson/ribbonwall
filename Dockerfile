@@ -28,7 +28,10 @@ ARG db_host
 ARG db_port
 ARG aws_region
 ARG aws_arn
+ARG auth_client_secret
 
+# Genetal ENVs
+ENV SERVICE_CONFIG production
 # DB credentials from ENV
 ENV DB_USER $db_user
 ENV DB_PASSWORD $db_password
@@ -37,6 +40,8 @@ ENV DB_HOST $db_host
 ENV DB_PORT $db_port
 ENV AWS_REGION $aws_region
 ENV AWS_ARN $aws_arn
+# AUTH credentials from ENV
+ENV AUTH_CLIENT_SECRET $auth_client_secret
 
 RUN ["chmod", "+x", "./be_ribbonwall"]
 ENTRYPOINT ./be_ribbonwall
