@@ -1,7 +1,7 @@
 env: production
 
 db:
-  host: localhost
+  host: ribbonwall.cluster-coainxnx6ynm.us-west-2.rds.amazonaws.com
   name: ribbonwall_db
   port: 3306
   sslmode: disable
