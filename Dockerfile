@@ -42,8 +42,9 @@ RUN go build -o /app ./be_ribbonwall/main.go
 FROM alpine
 WORKDIR /app
 COPY --from=build-env /app /app/
-COPY --from=build-env /app/ ./be_ribbonwall/config/config.production.yaml
-COPY --from=build-env /app/ ./be_ribbonwall/config/credentials/ribbonwall.pem
+RUN mkdir -p /app/be_ribbonwall/config/credentials
+COPY ./be_ribbonwall/config/config.production.yaml /app/be_ribbonwall/config
+COPY ./be_ribbonwall/config/credentials/ribbonwall.pem /app/be_ribbonwall/config/credentials
 
 EXPOSE 8080
 
@@ -70,5 +71,5 @@ ENV AWS_ARN $aws_arn
 # AUTH credentials from ENV
 ENV AUTH_CLIENT_SECRET $auth_client_secret
 
-RUN ["chmod", "+x", "./app"]
-ENTRYPOINT ./app
+#RUN ["chmod", "+x", "./app"]
+#ENTRYPOINT ./app
