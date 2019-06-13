@@ -1,36 +1,5 @@
 # build stage
-#FROM golang:alpine AS build-env
-#RUN apk --no-cache upgrade && apk --no-cache add ca-certificates
-#RUN apk add git
-#ADD be_ribbonwall /be_ribbonwall
-#ADD common /common
-#
-#
-## Download dependencies
-#RUN go get github.com/go-sql-driver/mysql
-## TODO add libs
-#
-## Build go package
-#RUN cd /be_ribbonwall && go build -o be_ribbonwall main.go
-#
-## final stage
-#FROM alpine
-#WORKDIR /app
-#COPY --from=build-env /be_ribbonwall /app/
-
-
-
-
-
-
-
-
-
-
-
-# build stage
 FROM golang:alpine AS build-env
-RUN apk --no-cache upgrade && apk --no-cache add ca-certificates
 RUN apk add git
 
 WORKDIR $GOPATH/src/github.com/ribbonwall
@@ -40,6 +9,7 @@ RUN go build -o /app ./be_ribbonwall/main.go
 
 # final stage
 FROM alpine
+RUN apk --no-cache upgrade && apk --no-cache add ca-certificates
 WORKDIR /app
 COPY --from=build-env /app /app/
 RUN mkdir -p /app/be_ribbonwall/config/credentials
