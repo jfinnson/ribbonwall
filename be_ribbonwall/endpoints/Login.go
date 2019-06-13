@@ -6,6 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2"
 	"net/http"
+
+	logger "github.com/ribbonwall/common/logging"
 )
 
 func LoginHandler(c *gin.Context) {
@@ -57,6 +59,8 @@ func CallbackHandler(c *gin.Context) {
 	session.Set("id_token", token.Extra("id_token"))
 	session.Set("access_token", token.AccessToken)
 	session.Save()
+
+	logger.Infof("access_token: %s", token.AccessToken)
 
 	// Redirect to logged in page
 	c.Redirect(http.StatusSeeOther, "/competition_results")
