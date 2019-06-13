@@ -42,6 +42,7 @@ RUN go build -o /app ./be_ribbonwall/main.go
 FROM alpine
 WORKDIR /app
 COPY --from=build-env /app /app/
+COPY --from=build-env /app/ ./be_ribbonwall/config/credentials/ribbonwall.pem
 
 EXPOSE 8080
 
