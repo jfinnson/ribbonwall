@@ -71,5 +71,5 @@ ENV AWS_ARN $aws_arn
 # AUTH credentials from ENV
 ENV AUTH_CLIENT_SECRET $auth_client_secret
 
-#RUN ["chmod", "+x", "./app"]
-#ENTRYPOINT ./app
+RUN ["chmod", "+x", "./app"]
+ENTRYPOINT ./app
