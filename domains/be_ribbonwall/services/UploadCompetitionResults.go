@@ -5,7 +5,7 @@ import (
 	"encoding/csv"
 	"errors"
 	"fmt"
-	"github.com/ribbonwall/be_ribbonwall/models"
+	"github.com/ribbonwall/domains/be_ribbonwall/models"
 	"io"
 	"mime/multipart"
 	"strconv"

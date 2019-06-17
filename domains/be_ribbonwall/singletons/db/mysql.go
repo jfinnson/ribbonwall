@@ -1,10 +1,10 @@
 package db
 
 import (
+	"github.com/ribbonwall/domains/be_ribbonwall/singletons/config"
 	"sync"
 
 	"github.com/jinzhu/gorm"
-	"github.com/ribbonwall/be_ribbonwall/singletons/config"
 	commonMySQL "github.com/ribbonwall/common/mysql"
 )
 

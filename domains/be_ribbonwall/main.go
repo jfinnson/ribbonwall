@@ -6,13 +6,13 @@ import (
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/ribbonwall/be_ribbonwall/config"
-	"github.com/ribbonwall/be_ribbonwall/endpoints"
-	"github.com/ribbonwall/be_ribbonwall/models"
-	singletonConfig "github.com/ribbonwall/be_ribbonwall/singletons/config"
-	singletonDatabase "github.com/ribbonwall/be_ribbonwall/singletons/db"
 	"github.com/ribbonwall/common/auth"
 	logger "github.com/ribbonwall/common/logging"
+	"github.com/ribbonwall/domains/be_ribbonwall/config"
+	"github.com/ribbonwall/domains/be_ribbonwall/endpoints"
+	"github.com/ribbonwall/domains/be_ribbonwall/models"
+	singletonConfig "github.com/ribbonwall/domains/be_ribbonwall/singletons/config"
+	singletonDatabase "github.com/ribbonwall/domains/be_ribbonwall/singletons/db"
 	"time"
 )
 

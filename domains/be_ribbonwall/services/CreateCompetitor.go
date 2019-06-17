@@ -1,6 +1,6 @@
 package services
 
-import "github.com/ribbonwall/be_ribbonwall/models"
+import "github.com/ribbonwall/domains/be_ribbonwall/models"
 
 func (services *RibbonwallServices) CreateCompetitor(
 	firstName string,

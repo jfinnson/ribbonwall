@@ -2,7 +2,7 @@ package services
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/ribbonwall/be_ribbonwall/config"
+	"github.com/ribbonwall/domains/be_ribbonwall/config"
 	"sync"
 )
 

@@ -5,16 +5,16 @@ RUN apk add git
 WORKDIR $GOPATH/src/github.com/ribbonwall
 COPY . .
 RUN go get -d -v ./...
-RUN go build -o /app ./be_ribbonwall/main.go
+RUN go build -o /app ./domains/be_ribbonwall/main.go
 
 # final stage
 FROM alpine
 RUN apk --no-cache upgrade && apk --no-cache add ca-certificates
 WORKDIR /app
 COPY --from=build-env /app /app/
-RUN mkdir -p /app/be_ribbonwall/config/credentials
-COPY ./be_ribbonwall/config/config.production.yaml /app/be_ribbonwall/config
-COPY ./be_ribbonwall/config/credentials/ribbonwall.pem /app/be_ribbonwall/config/credentials
+RUN mkdir -p /app/domains/be_ribbonwall/config/credentials
+COPY ./domains/be_ribbonwall/config/config.production.yaml /app/domains/be_ribbonwall/config
+COPY ./domains/be_ribbonwall/config/credentials/ribbonwall.pem /app/domains/be_ribbonwall/config/credentials
 
 EXPOSE 8080
 

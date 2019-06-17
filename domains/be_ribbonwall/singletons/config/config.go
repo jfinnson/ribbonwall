@@ -2,11 +2,11 @@ package config
 
 import (
 	"fmt"
+	"github.com/ribbonwall/domains/be_ribbonwall/config"
 	"os"
 	"sync"
 
 	"github.com/jinzhu/configor"
-	"github.com/ribbonwall/be_ribbonwall/config"
 )
 
 var once sync.Once
@@ -18,7 +18,7 @@ func Get() config.Config {
 	once.Do(func() {
 		// Load config
 		conf = config.Config{}
-		_ = configor.Load(&conf, fmt.Sprintf("be_ribbonwall/config/config.%s.yaml", os.Getenv("SERVICE_CONFIG")))
+		_ = configor.Load(&conf, fmt.Sprintf("domains/be_ribbonwall/config/config.%s.yaml", os.Getenv("SERVICE_CONFIG")))
 	})
 
 	return conf

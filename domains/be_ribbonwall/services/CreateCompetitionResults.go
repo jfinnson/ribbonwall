@@ -1,7 +1,7 @@
 package services
 
 import (
-	"github.com/ribbonwall/be_ribbonwall/models"
+	"github.com/ribbonwall/domains/be_ribbonwall/models"
 	"time"
 )
 

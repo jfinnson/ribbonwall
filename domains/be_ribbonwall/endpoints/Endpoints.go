@@ -2,8 +2,8 @@ package endpoints
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/ribbonwall/be_ribbonwall/config"
-	"github.com/ribbonwall/be_ribbonwall/services"
+	"github.com/ribbonwall/domains/be_ribbonwall/config"
+	"github.com/ribbonwall/domains/be_ribbonwall/services"
 )
 
 // Endpoints --
