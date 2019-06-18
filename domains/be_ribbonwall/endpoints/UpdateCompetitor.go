@@ -34,7 +34,7 @@ func UpdateCompetitor(c *gin.Context) {
 	}
 
 	// Create competitor
-	updatedCompetitor, err := s.UpdateCompetitor(competitor, fields.FirstName, fields.LastName,
+	updatedCompetitor, err := s.UpdateCompetitor(&competitor, fields.FirstName, fields.LastName,
 		fields.ExternalID, fields.TeamName)
 
 	if err != nil {

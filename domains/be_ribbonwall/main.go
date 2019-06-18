@@ -90,8 +90,8 @@ func main() {
 		// CRUD competition results
 		api.GET("/competition_results", endpoints.GetCompetitionResults)
 		api.POST("/competition_results", endpoints.CreateCompetitionResult)
-		//api.PUT("/competition_results/:uuid", endpoints.UpdateCompetitionResult)
-		//api.DELETE("/competition_results/:uuid", endpoints.DeleteCompetitionResult)
+		api.PUT("/competition_results/:uuid", endpoints.UpdateCompetitionResult)
+		api.DELETE("/competition_results/:uuid", endpoints.DeleteCompetitionResult)
 
 		adminApi.POST("/competition_results/upload", auth.Auth0Groups(AdminGroup), endpoints.UploadCompetitionResults)
 	}

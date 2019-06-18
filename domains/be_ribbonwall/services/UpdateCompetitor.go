@@ -5,7 +5,7 @@ import (
 )
 
 func (services *RibbonwallServices) UpdateCompetitor(
-	competitor models.Competitor,
+	competitor *models.Competitor,
 	firstName string,
 	lastName string,
 	externalId string,
@@ -26,5 +26,5 @@ func (services *RibbonwallServices) UpdateCompetitor(
 
 	tx.Commit()
 
-	return &competitor, nil
+	return competitor, nil
 }
