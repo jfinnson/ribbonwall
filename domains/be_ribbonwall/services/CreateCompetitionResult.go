@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func (services *RibbonwallServices) CreateCompetitionResults(
+func (services *RibbonwallServices) CreateCompetitionResult(
 	competitor *models.Competitor,
 	organizationName string,
 	horseName string,

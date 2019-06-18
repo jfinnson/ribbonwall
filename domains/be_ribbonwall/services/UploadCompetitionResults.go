@@ -148,7 +148,7 @@ func importCompetitionResults(services *RibbonwallServices, resultsRaw []competi
 
 		// Create competition results
 		// Warning this is not idempotent. This is because atm there is no good way to check if an entry is a duplicate.
-		competitionResult, err := services.CreateCompetitionResults(
+		competitionResult, err := services.CreateCompetitionResult(
 			competitor,
 			result.OrganizationName,
 			result.HorseName,
