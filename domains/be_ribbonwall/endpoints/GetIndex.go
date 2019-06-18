@@ -5,6 +5,6 @@ import (
 	"net/http"
 )
 
-func GetIndex(c *gin.Context) {
-	c.String(http.StatusOK, "Hello, World!!")
+func GetPing(c *gin.Context) {
+	c.String(http.StatusOK, "Pong")
 }

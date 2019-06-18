@@ -70,10 +70,9 @@ func main() {
 	router.Use(static.Serve("/", static.LocalFile("domains/fe_competitors/build", true)))
 
 	// Init gin routes
-	api := router.Group("/api")
+	api := router.Group("/api/v1")
 	{
-		api.GET("/", endpoints.GetIndex)
-		api.GET("/hello", endpoints.GetIndex)
+		api.GET("/", endpoints.GetPing)
 		api.GET("/login", endpoints.LoginHandler)
 		api.GET("/logout", endpoints.LogoutHandler)
 		api.GET("/callback", endpoints.CallbackHandler)
@@ -81,7 +80,22 @@ func main() {
 	}
 
 	// Auth admin required
-	router.POST("/competition_results/upload", auth.Auth0Groups(AdminGroup), endpoints.UploadCompetitionResults)
+	adminApi := router.Group("/api_admin/v1")
+	{
+		// CRUD competitors
+		api.GET("/competitors", endpoints.GetCompetitors)
+		api.POST("/competitors", endpoints.CreateCompetitor)
+		api.PUT("/competitors/:uuid", endpoints.UpdateCompetitor)
+		api.DELETE("/competitors/:uuid", endpoints.DeleteCompetitor)
+
+		// CRUD competition results
+		//api.GET("/competition_results", endpoints.GetCompetitionResult)
+		//api.POST("/competition_results", endpoints.CreateCompetitionResult)
+		//api.PUT("/competition_results/:uuid", endpoints.UpdateCompetitionResult)
+		//api.DELETE("/competition_results/:uuid", endpoints.DeleteCompetitionResult)
+
+		adminApi.POST("/competition_results/upload", auth.Auth0Groups(AdminGroup), endpoints.UploadCompetitionResults)
+	}
 
 	_ = router.Run(":8080")
 }

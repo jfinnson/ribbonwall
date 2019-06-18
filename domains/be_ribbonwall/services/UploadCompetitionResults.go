@@ -138,8 +138,9 @@ func importCompetitionResults(services *RibbonwallServices, resultsRaw []competi
 	for _, result := range resultsRaw {
 		// Create competitor if one does not exist with the external ID
 		var competitor models.Competitor
-		db.Where("external_id = ?", result.CompetitorExternalID).First(&competitor)
+		db.Where("external_id = ?", result.CompetitorExternalID).First(&competitor) // TODO refactor into Create competitor
 
+		// Check if not found. (awkward comparator, cleaner approach?)
 		if competitor == (models.Competitor{}) {
 			// Create competitor
 			newCompetitor, err := services.CreateCompetitor(result.CompetitorFirstName, result.CompetitorLastName,

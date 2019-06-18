@@ -8,13 +8,13 @@ import (
 )
 
 // Binding for validation
-type CompetitionResultsParams struct {
+type competitionResultsParams struct {
 	OrganizationName string                `form:"organization" binding:"required"`
 	ResultsFile      *multipart.FileHeader `form:"competition_results" binding:"required"`
 }
 
 func UploadCompetitionResults(c *gin.Context) {
-	var competitionResultsParams CompetitionResultsParams
+	var competitionResultsParams competitionResultsParams
 	if err := c.ShouldBind(&competitionResultsParams); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
