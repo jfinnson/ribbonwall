@@ -23,7 +23,7 @@ func InitAuth(configInit Config) {
 	config = configInit
 
 	//Creates a configuration with the Auth0 information
-	data, err := ioutil.ReadFile("./be_ribbonwall/config/credentials/ribbonwall.pem")
+	data, err := ioutil.ReadFile("./domains/be_ribbonwall/config/credentials/ribbonwall.pem")
 	if err != nil {
 		panic("Impossible to read key form disk")
 	}

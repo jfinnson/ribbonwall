@@ -4,6 +4,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
+	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"github.com/ribbonwall/common/auth"
@@ -65,14 +66,21 @@ func main() {
 	store := cookie.NewStore([]byte("secret"))
 	router.Use(sessions.Sessions("mysession", store))
 
+	// Serve frontend static files
+	router.Use(static.Serve("/", static.LocalFile("domains/fe_competitors/build", true)))
+
 	// Init gin routes
-	router.GET("/", endpoints.GetIndex)
-	router.GET("/login", endpoints.LoginHandler)
-	router.GET("/logout", endpoints.LogoutHandler)
-	router.GET("/callback", endpoints.CallbackHandler)
+	api := router.Group("/api")
+	{
+		api.GET("/", endpoints.GetIndex)
+		api.GET("/hello", endpoints.GetIndex)
+		api.GET("/login", endpoints.LoginHandler)
+		api.GET("/logout", endpoints.LogoutHandler)
+		api.GET("/callback", endpoints.CallbackHandler)
+		api.GET("/competition_results", endpoints.GetCompetitionResults)
+	}
 
 	// Auth admin required
-	router.GET("/competition_results", auth.Auth0Groups(AdminGroup), endpoints.GetCompetitionResults)
 	router.POST("/competition_results/upload", auth.Auth0Groups(AdminGroup), endpoints.UploadCompetitionResults)
 
 	_ = router.Run(":8080")
