@@ -137,26 +137,19 @@ func importCompetitionResults(services *RibbonwallServices, resultsRaw []competi
 	var importedResults []*models.CompetitionResults
 	for _, result := range resultsRaw {
 		// Create competitor if one does not exist with the external ID
-		var competitor models.Competitor
-		db.Where("external_id = ?", result.CompetitorExternalID).First(&competitor) // TODO refactor into Create competitor
+		competitor, err := services.CreateOrUpdateCompetitorByExternalID(result.CompetitorFirstName,
+			result.CompetitorLastName, result.CompetitorExternalID, result.TeamName)
 
 		// Check if not found. (awkward comparator, cleaner approach?)
-		if competitor == (models.Competitor{}) {
-			// Create competitor
-			newCompetitor, err := services.CreateCompetitor(result.CompetitorFirstName, result.CompetitorLastName,
-				result.CompetitorExternalID, result.TeamName)
-			competitor = *newCompetitor
-
-			if err != nil {
-				log.Errorf("error creating new competitor entry, %v", err)
-				return nil, err
-			}
+		if err != nil {
+			log.Errorf("error creating/updating new competitor entry, %v", err)
+			return nil, err
 		}
 
 		// Create competition results
 		// Warning this is not idempotent. This is because atm there is no good way to check if an entry is a duplicate.
 		competitionResult, err := services.CreateCompetitionResults(
-			&competitor,
+			competitor,
 			result.OrganizationName,
 			result.HorseName,
 			result.CompetitionName,

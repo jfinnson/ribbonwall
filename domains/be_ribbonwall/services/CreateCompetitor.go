@@ -1,6 +1,11 @@
 package services
 
-import "github.com/ribbonwall/domains/be_ribbonwall/models"
+import (
+	"errors"
+	"fmt"
+	log "github.com/ribbonwall/common/logging"
+	"github.com/ribbonwall/domains/be_ribbonwall/models"
+)
 
 func (services *RibbonwallServices) CreateCompetitor(
 	firstName string,
@@ -10,6 +15,15 @@ func (services *RibbonwallServices) CreateCompetitor(
 ) (*models.Competitor, error) {
 	db := services.DB
 	tx := db.Begin()
+
+	var competitor models.Competitor
+	db.Where("external_id = ?", externalId).First(&competitor)
+
+	if competitor != (models.Competitor{}) {
+		msg := fmt.Sprintf("Competitor already exists with external id: %s", externalId)
+		log.Errorf(msg)
+		return nil, errors.New(msg)
+	}
 
 	newCompetitor := &models.Competitor{
 		FirstName:  firstName,
