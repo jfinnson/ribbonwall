@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"mime/multipart"
 	"net/http"
-	//log "github.com/ribbonwall/common/logging"
+	//log "github.com/jfinnson/ribbonwall/common/logging"
 )
 
 // Binding for validation

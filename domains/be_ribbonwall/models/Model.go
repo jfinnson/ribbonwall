@@ -3,7 +3,7 @@ package models
 import (
 	"time"
 
-	uuid "github.com/satori/go.uuid"
+	"github.com/gofrs/uuid"
 )
 
 // Model defines the interface for entity models

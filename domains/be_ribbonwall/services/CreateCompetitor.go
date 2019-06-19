@@ -3,8 +3,8 @@ package services
 import (
 	"errors"
 	"fmt"
-	log "github.com/ribbonwall/common/logging"
-	"github.com/ribbonwall/domains/be_ribbonwall/models"
+	log "github.com/jfinnson/ribbonwall/common/logging"
+	"github.com/jfinnson/ribbonwall/domains/be_ribbonwall/models"
 )
 
 func (services *RibbonwallServices) CreateCompetitor(

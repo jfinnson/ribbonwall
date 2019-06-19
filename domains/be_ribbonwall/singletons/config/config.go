@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	"github.com/ribbonwall/domains/be_ribbonwall/config"
+	"github.com/jfinnson/ribbonwall/domains/be_ribbonwall/config"
 	"os"
 	"sync"
 

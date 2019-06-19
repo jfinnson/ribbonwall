@@ -1,11 +1,11 @@
 package db
 
 import (
-	"github.com/ribbonwall/domains/be_ribbonwall/singletons/config"
+	"github.com/jfinnson/ribbonwall/domains/be_ribbonwall/singletons/config"
 	"sync"
 
+	commonMySQL "github.com/jfinnson/ribbonwall/common/mysql"
 	"github.com/jinzhu/gorm"
-	commonMySQL "github.com/ribbonwall/common/mysql"
 )
 
 var once sync.Once

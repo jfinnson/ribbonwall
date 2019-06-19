@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/ribbonwall/domains/be_ribbonwall/models"
+	"github.com/jfinnson/ribbonwall/domains/be_ribbonwall/models"
 	"net/http"
 )
 

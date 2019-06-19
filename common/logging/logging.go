@@ -8,7 +8,7 @@ import (
 	"runtime/debug"
 	"sync"
 
-	"github.com/ribbonwall/common/metadata"
+	"github.com/jfinnson/ribbonwall/common/metadata"
 	log "github.com/sirupsen/logrus"
 )
 

@@ -1,8 +1,8 @@
 package services
 
 import (
+	"github.com/jfinnson/ribbonwall/domains/be_ribbonwall/config"
 	"github.com/jinzhu/gorm"
-	"github.com/ribbonwall/domains/be_ribbonwall/config"
 	"sync"
 )
 

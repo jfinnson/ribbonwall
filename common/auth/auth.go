@@ -11,7 +11,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	logger "github.com/ribbonwall/common/logging"
+	logger "github.com/jfinnson/ribbonwall/common/logging"
 )
 
 // Wrapping a Gin endpoint with Auth0 Groups.

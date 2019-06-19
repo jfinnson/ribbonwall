@@ -7,7 +7,7 @@ import (
 	"golang.org/x/oauth2"
 	"net/http"
 
-	logger "github.com/ribbonwall/common/logging"
+	logger "github.com/jfinnson/ribbonwall/common/logging"
 )
 
 func LoginHandler(c *gin.Context) {

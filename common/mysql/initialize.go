@@ -2,8 +2,8 @@ package mysql
 
 import (
 	"fmt"
+	log "github.com/jfinnson/ribbonwall/common/logging"
 	"github.com/jinzhu/gorm"
-	log "github.com/ribbonwall/common/logging"
 )
 
 // Initialize --

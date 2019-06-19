@@ -2,11 +2,23 @@
 FROM golang:alpine AS build-env
 RUN apk add git
 
-WORKDIR $GOPATH/src/github.com/ribbonwall
-COPY . .
+WORKDIR $GOPATH/src/github.com/jfinnson/ribbonwall
 
-# be_ribbonwall
-RUN go get -d -v ./...
+## be_ribbonwall
+# Force the go compiler to use modules
+ENV GO111MODULE=on
+
+# We want to populate the module cache based on the go.{mod,sum} files.
+COPY go.mod .
+COPY go.sum .
+#This is the ‘magic’ step that will download all the dependencies that are specified in
+# the go.mod and go.sum file.
+# Because of how the layer caching system works in Docker, the  go mod download
+# command will _ only_ be re-run when the go.mod or go.sum file change
+# (or when we add another docker instruction this line)
+RUN go mod download
+# Build be_ribbonwalld
+COPY . .
 RUN go build -o /app ./domains/be_ribbonwall/main.go
 
 # fe_competitors
@@ -17,12 +29,12 @@ RUN apk --no-cache upgrade && apk --no-cache add ca-certificates
 WORKDIR /app
 # be_ribbonwall
 COPY --from=build-env /app /app/
-# fe_competitors
-RUN mkdir -p /app/domains/fe_competitors/build
-COPY --from=build-env ./domains/fe_competitors/build /app/domains/fe_competitors/build
 RUN mkdir -p /app/domains/be_ribbonwall/config/credentials
 COPY ./domains/be_ribbonwall/config/config.production.yaml /app/domains/be_ribbonwall/config
 COPY ./domains/be_ribbonwall/config/credentials/ribbonwall.pem /app/domains/be_ribbonwall/config/credentials
+# fe_competitors
+#RUN mkdir -p /app/domains/fe_competitors/build
+#COPY --from=build-env ./domains/fe_competitors/build /app/domains/fe_competitors/build
 
 EXPOSE 8080
 

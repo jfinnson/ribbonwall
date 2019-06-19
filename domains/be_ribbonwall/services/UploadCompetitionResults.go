@@ -5,14 +5,14 @@ import (
 	"encoding/csv"
 	"errors"
 	"fmt"
-	"github.com/ribbonwall/domains/be_ribbonwall/models"
+	"github.com/jfinnson/ribbonwall/domains/be_ribbonwall/models"
 	"io"
 	"mime/multipart"
 	"strconv"
 	"strings"
 	"time"
 
-	log "github.com/ribbonwall/common/logging"
+	log "github.com/jfinnson/ribbonwall/common/logging"
 )
 
 func (services *RibbonwallServices) UploadCompetitionResults(file multipart.File) ([]competitionResultsRaw, error) {

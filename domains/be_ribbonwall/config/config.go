@@ -1,8 +1,8 @@
 package config
 
 import (
-	commonAuth "github.com/ribbonwall/common/auth"
-	commonMySQL "github.com/ribbonwall/common/mysql"
+	commonAuth "github.com/jfinnson/ribbonwall/common/auth"
+	commonMySQL "github.com/jfinnson/ribbonwall/common/mysql"
 )
 
 // Config --
