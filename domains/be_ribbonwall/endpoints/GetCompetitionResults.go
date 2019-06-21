@@ -21,5 +21,5 @@ func GetCompetitionResults(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, competitionResults)
+	c.JSON(http.StatusOK, gin.H{"data": competitionResults})
 }

@@ -1,16 +1,15 @@
 {
-  "name": "fe_competitors",
+  "name": "test-admin",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/admin",
   "dependencies": {
-    "@material-ui/core": "^4.1.1",
-    "@material-ui/icons": "^4.2.0",
-    "@material-ui/styles": "latest",
-    "fg-loadcss": "^2.1.0",
-    "prop-types": "latest",
+    "prop-types": "^15.7.2",
+    "ra-data-json-server": "^2.9.3",
     "react": "^16.8.6",
+    "react-admin": "^2.9.3",
     "react-dom": "^16.8.6",
-    "react-scripts": "^3.0.1"
+    "react-scripts": "3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
