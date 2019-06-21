@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core";
+import { config } from '../../../constants';
 
 const styles = {
     cardGrid: {
@@ -41,13 +42,13 @@ class ResultContainer extends Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:8080/api/competition_results")
+        fetch(config.url.API_URL + "/api/v1/competition_results")
             .then(res => res.json())
             .then(
                 (result) => {
                     this.setState({
                         isLoaded: true,
-                        items: result
+                        items: result.data
                     });
                 },
                 // Note: it's important to handle errors here
