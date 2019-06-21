@@ -66,7 +66,7 @@ workflows:
           path: ~/project
           tag: ${CIRCLE_SHA1}
           extra-build-args: "--build-arg db_user=${DB_USER} --build-arg db_password=${DB_PASSWORD}
-          --build-arg db_name=${DB_NAME} --build-arg db_host=${DB_HOST} --build-arg db_host=${DB_PORT}
+          --build-arg db_name=${DB_NAME} --build-arg db_host=${DB_HOST} --build-arg db_port=${DB_PORT}
           --build-arg aws_region=${aws_region} --build-arg aws_arn=${aws_arn}
           --build-arg auth_client_secret=${AUTH_CLIENT_SECRET}"
           # Uncomment if the repository does not yet exist
