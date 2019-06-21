@@ -10,8 +10,9 @@ import {
     fetchUtils,
 } from 'react-admin';
 import { stringify } from 'query-string';
+import { config } from '../constants';
 
-const API_URL = 'http://localhost:8080/api/v1';
+const API_URL = config.url.API_URL + '/api/v1';
 
 /**
  * @param {String} type One of the constants appearing at the top of this file, e.g. 'UPDATE'
