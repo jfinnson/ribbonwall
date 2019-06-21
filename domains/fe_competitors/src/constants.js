@@ -1,7 +1,7 @@
 // Constants.js
 const prod = {
     url: {
-        API_URL: 'http://dev.ribbonwall.com',
+        API_URL: 'http://dev.ribbonwall.ca',
     }
 };
 const dev = {
