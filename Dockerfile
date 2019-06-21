@@ -69,7 +69,7 @@ ARG aws_arn
 ARG auth_client_secret
 
 # Genetal ENVs
-ENV SERVICE_CONFIG local
+ENV SERVICE_CONFIG production
 # DB credentials from ENV
 ENV DB_USER $db_user
 ENV DB_PASSWORD $db_password
