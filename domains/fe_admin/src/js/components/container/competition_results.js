@@ -1,7 +1,4 @@
 // in src/users.js
-import compose from 'recompose/compose';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import React, {Fragment} from 'react';
 import { List, Datagrid, TextField, EmailField } from 'react-admin';
 import { Route, Switch } from 'react-router';
@@ -10,7 +7,6 @@ import { Drawer, withStyles } from '@material-ui/core';
 import { CardActions, CreateButton, ExportButton, RefreshButton, Button } from 'react-admin';
 import UploadCompetitionResults from "./upload_competition_results";
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import Hidden from "@material-ui/core/Hidden";
 
 const styles = {
     drawerContent: {
@@ -75,7 +71,7 @@ class CompetitionResultsList extends React.Component {
                         >
                             <UploadCompetitionResults
                                 className={classes.drawerContent}
-                                onCancel={this.handleClose}
+                                // onCancel={this.handleClose}
                                 {...props}
                             />
                         </Drawer>
@@ -85,15 +81,9 @@ class CompetitionResultsList extends React.Component {
         );
     }
 
-    handleClose = () => {
-        this.props.push('/competition_results');
-    };
+    // handleClose = () => {
+    //     this.props.push('/competition_results');
+    // };
 }
 
-export default compose(
-    connect(
-        undefined,
-        { push }
-    ),
-    withStyles(styles)
-)(CompetitionResultsList);
+export default withStyles(styles)(CompetitionResultsList);

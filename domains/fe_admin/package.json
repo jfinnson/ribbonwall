@@ -10,6 +10,10 @@
     "react-admin": "^2.9.3",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
+    "react-router": "latest",
+    "react-router-dom": "latest",
+    "@material-ui/core": "latest",
+    "@material-ui/icons": "latest"
   },
   "scripts": {
     "start": "react-scripts start",

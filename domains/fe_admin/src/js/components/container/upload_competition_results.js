@@ -8,12 +8,14 @@ class UploadCompetitionResults extends React.Component {
     render() {
         const { push, classes, ...props } = this.props;
         return (
-            <SimpleForm save={this.save}>
-                <TextInput source="organization" validate={required()} />
-                <FileInput source="competition_results" label="Competition Result CSV" validate={required()}>
-                    <FileField source="src" title="title" />
-                </FileInput>
-            </SimpleForm>
+            <Create {...props} resource={"competition_results_upload"}>
+                <SimpleForm save={this.save}>
+                    <TextInput source="organization" validate={required()} />
+                    <FileInput source="competition_results" label="Competition Result CSV" validate={required()}>
+                        <FileField source="src" title="title" />
+                    </FileInput>
+                </SimpleForm>
+            </Create>
         );
     }
 }
