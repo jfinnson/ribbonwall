@@ -63,6 +63,6 @@ func CallbackHandler(c *gin.Context) {
 	logger.Infof("access_token: %s", token.AccessToken)
 
 	// Redirect to logged in page
-	c.Redirect(http.StatusSeeOther, "/competition_results")
+	c.Redirect(http.StatusSeeOther, authConfig.HomeURL)
 
 }

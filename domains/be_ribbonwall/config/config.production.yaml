@@ -13,6 +13,6 @@ auth:
   issuer: https://ribbonwall.auth0.com/
   domain: ribbonwall.auth0.com
   clientID: BpEKugicW7UkdXmWatcHLbw5iNf4wp5l
-  redirectURL: http://dev.ribbonwall.ca/callback
-  loginURL: http://dev.ribbonwall.ca/login
+  redirectURL: http://dev.ribbonwall.ca/api/v1/callback
+  loginURL: http://dev.ribbonwall.ca/api/v1/login
   homeURL: http://dev.ribbonwall.ca/

@@ -43,6 +43,7 @@ func init() {
 	dbClient.LogMode(true)
 	// gorm migrate up schema. Will only create tables and columns. Will not remove or modify existing columns.
 	dbClient.AutoMigrate(&models.CompetitionResults{}, &models.Competitor{})
+	logger.Info("Init done")
 }
 
 func main() {
@@ -76,6 +77,7 @@ func main() {
 		api.GET("/login", endpoints.LoginHandler)
 		api.GET("/logout", endpoints.LogoutHandler)
 		api.GET("/callback", endpoints.CallbackHandler)
+		api.GET("/competition_results", endpoints.GetCompetitionResults)
 	}
 
 	// Auth admin required
@@ -83,16 +85,16 @@ func main() {
 	adminApi := router.Group("/api_admin/v1")
 	{
 		// CRUD competitors
-		adminApi.GET("/competitors", endpoints.GetCompetitors)
-		adminApi.POST("/competitors", endpoints.CreateCompetitor)
-		adminApi.PUT("/competitors/:uuid", endpoints.UpdateCompetitor)
-		adminApi.DELETE("/competitors/:uuid", endpoints.DeleteCompetitor)
+		adminApi.GET("/competitors", auth.Auth0Groups(AdminGroup), endpoints.GetCompetitors)
+		adminApi.POST("/competitors", auth.Auth0Groups(AdminGroup), endpoints.CreateCompetitor)
+		adminApi.PUT("/competitors/:uuid", auth.Auth0Groups(AdminGroup), endpoints.UpdateCompetitor)
+		adminApi.DELETE("/competitors/:uuid", auth.Auth0Groups(AdminGroup), endpoints.DeleteCompetitor)
 
 		// CRUD competition results
-		api.GET("/competition_results", endpoints.GetCompetitionResults)
-		adminApi.POST("/competition_results", endpoints.CreateCompetitionResult)
-		adminApi.PUT("/competition_results/:uuid", endpoints.UpdateCompetitionResult)
-		adminApi.DELETE("/competition_results/:uuid", endpoints.DeleteCompetitionResult)
+		adminApi.GET("/competition_results", auth.Auth0Groups(AdminGroup), endpoints.GetCompetitionResults)
+		adminApi.POST("/competition_results", auth.Auth0Groups(AdminGroup), endpoints.CreateCompetitionResult)
+		adminApi.PUT("/competition_results/:uuid", auth.Auth0Groups(AdminGroup), endpoints.UpdateCompetitionResult)
+		adminApi.DELETE("/competition_results/:uuid", auth.Auth0Groups(AdminGroup), endpoints.DeleteCompetitionResult)
 
 		adminApi.POST("/competition_results/upload", auth.Auth0Groups(AdminGroup), endpoints.UploadCompetitionResults)
 	}
