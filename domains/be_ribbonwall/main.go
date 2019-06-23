@@ -2,8 +2,6 @@ package main
 
 import (
 	"github.com/gin-contrib/cors"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/jfinnson/ribbonwall/common/auth"
@@ -63,10 +61,6 @@ func main() {
 	// Init gin middleware
 	router.Use(EndpointMiddleware())
 
-	// Init sessions
-	store := cookie.NewStore([]byte("secret"))
-	router.Use(sessions.Sessions("mysession", store))
-
 	// Serve frontend static files
 	router.Use(static.Serve("/", static.LocalFile("domains/fe_competitors/build", true)))
 
@@ -74,9 +68,6 @@ func main() {
 	api := router.Group("/api/v1")
 	{
 		api.GET("/", endpoints.GetPing)
-		api.GET("/login", endpoints.LoginHandler)
-		api.GET("/logout", endpoints.LogoutHandler)
-		api.GET("/callback", endpoints.CallbackHandler)
 		api.GET("/competition_results", endpoints.GetCompetitionResults)
 	}
 

@@ -10,7 +10,7 @@ const convertFileToBase64 = file => new Promise((resolve, reject) => {
 
 const addUploadFeature = requestHandler => (type, resource, params) => {
 
-    if (type === 'CREATE' && resource === 'competition_results_upload') {
+    if (type === 'CREATE' && resource === 'competition_results/upload') {
 
         if (params.data.competition_results) {
 
@@ -29,7 +29,7 @@ const addUploadFeature = requestHandler => (type, resource, params) => {
                     ...params,
                     data: {
                         ...params.data,
-                        myFile: transformedMyFile
+                        competition_results: transformedMyFile
                     }
                 }));
         }

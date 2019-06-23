@@ -8,7 +8,7 @@ class UploadCompetitionResults extends React.Component {
     render() {
         const { push, classes, ...props } = this.props;
         return (
-            <Create {...props} resource={"competition_results_upload"}>
+            <Create {...props} resource={"competition_results/upload"}>
                 <SimpleForm save={this.save}>
                     <TextInput source="organization" validate={required()} />
                     <FileInput source="competition_results" label="Competition Result CSV" validate={required()}>

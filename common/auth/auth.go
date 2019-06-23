@@ -5,7 +5,6 @@ import (
 	"encoding/pem"
 	"fmt"
 	"github.com/auth0-community/go-auth0"
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/square/go-jose.v2"
 	"io/ioutil"
@@ -33,18 +32,13 @@ func InitAuth(configInit Config) {
 		panic("Invalid provided key")
 	}
 	secretProvider := auth0.NewKeyProvider(secret)
-	configuration := auth0.NewConfiguration(secretProvider, []string{config.Audience}, config.Issuer, jose.RS256)
+	//Aud needs to be Client ID because frontend needs to use id_token auth. Which uses ClientID as the AUD.
+	configuration := auth0.NewConfiguration(secretProvider, []string{config.ClientID}, config.Issuer, jose.RS256)
 	validator = auth0.NewValidator(configuration, nil)
 }
 
 func Auth0Groups(wantedGroups ...string) gin.HandlerFunc {
 	return gin.HandlerFunc(func(c *gin.Context) {
-
-		// Inject session's auth if not present in request
-		session := sessions.Default(c)
-		if c.Request.Header.Get("Authorization") == "" {
-			c.Request.Header.Set("Authorization", fmt.Sprintf("Bearer %s", session.Get("access_token")))
-		}
 
 		tok, err := validator.ValidateRequest(c.Request)
 		if err != nil {
