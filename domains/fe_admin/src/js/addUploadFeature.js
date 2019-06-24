@@ -21,8 +21,8 @@ const addUploadFeature = requestHandler => (type, resource, params) => {
             }
 
             return Promise.resolve( convertFileToBase64(myFile) )
-                .then( (picture64) => ({
-                    src: picture64,
+                .then( (file64) => ({
+                    src: file64,
                     title: `${myFile.title}`
                 }))
                 .then( transformedMyFile => requestHandler(type, resource, {
